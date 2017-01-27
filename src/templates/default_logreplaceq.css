@@ -1,0 +1,27 @@
+/*
+
+*/
+/*	I've never done CSS stuff before.
+	default_header_class is just the stuff for <h1> according to http://www.w3schools.com/
+	default_paragraph_class is just stuff for <p> accodring to http://www.w3schools.com/
+
+	One day if I learn how to do good looking web design maybe I'll change this. Make it look unique and also give saner classnames.
+	This is included in the hopes that it will make the code easier to use/modify for someone else in the future.
+*/
+.default_header_class {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.default_paragraph_class {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+}
