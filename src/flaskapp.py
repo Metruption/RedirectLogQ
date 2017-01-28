@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-    A simple URL redirection backend that logs the time of each redirection.
+    RedirectLogQ: A simple URL redirection backend that logs the time of each redirection.
     Copyright (C) 2017  Aaron Thomas
 
     This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ app = Flask(__name__)
 def index():
 	return render_template('index.html')
 
-@app.route('/redirect.php?token=<token>')
+@app.route('/redirect.php?token=<token>') #i could have chosen any name as long as it contained <token>
 def redirect(token):
 	'''
 	Redirects the user
