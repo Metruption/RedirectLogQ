@@ -68,12 +68,22 @@
 			This is an independently operated server running RedirectLogQ. If you are seeing this then the operator of the server has not changed the entry form page. For more information about RedirectLogQ you can view it on GitHub. Check it out at <a href="https://www.GitHub.com/Metruption/RedirectLogQ">https://www.GitHub.com/Metruption/RedirectLogQ</a>
 		</div>
         <div class="default_paragraph_class" id="form">
-            URL:<br>
-            <input type="text" id="url" value="">
+            <div id = "url_input">
+                URL:<br>
+                <input type="text" id="url" value="">
+                <br>
+            </div>
+            <div id = "location_description_input"
+                Location Description:<br>
+                <input type="text" id="location_description" value="">
+                <br>
+            </div>
+            <div id = "secret_input" hidden = "{{secret_hidden}}">
+                Secret:<br>
+                <input type="text" id="url" value="">
+                <br>
+            </div>
             <br>
-            Location Description:<br>
-            <input type="text" id="location_description" value="">
-            <br><br>
             <input type="submit" value="Submit" onclick="submit()">
         </div>
 	</body>

@@ -24,7 +24,9 @@ from flask import Flask, make_response, render_template, request
 from pymongo import MongoClient
 
 import token_handler
+import config
 
+mysecret = config.SECRET
 
 app = Flask(__name__)
 
@@ -45,7 +47,8 @@ def display_form():
     '''
     @todo(aaron): decide if it's worth your time making a comment for this
     '''
-    return render_template('form.html') #@todo(aaron): make the form, also dont push until this is documented
+    secret_hidden = mysecreret == None:
+    return render_template('form.html', secret_hidden=secret_hidden)
 
 
 @app.route('/handle_tokens', methods=['POST'])
