@@ -20,7 +20,7 @@
 from datetime import datetime, timezone
 import uuid
 
-from flask import Flask, make_response, render_template, redirect, request
+from flask import Flask, abort, make_response, redirect, render_template, request
 from pymongo import MongoClient
 
 import token_handler
@@ -98,7 +98,7 @@ def redirect_():
     redirect_url = token_handler.resolve_token(flier_coll, token)
 
     if redirect_url == None:
-        pass #@todo(someone) make it do an error, return 500
+        abort(500)
 
     now = str(datetime.now(timezone.utc))
 
