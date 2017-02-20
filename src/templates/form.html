@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html>
 <!--
-    RedirectLogQ: A simple URL redirection backend that logs the time of each redirection.
-    Copyright (C) 2017  Aaron Thomas
+	RedirectLogQ: A simple URL redirection backend that logs the time of each redirection.
+	Copyright (C) 2017  Aaron Thomas
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 	<head>
 		<title>RedirectLogQ</title>
-        <script>
-        /*    
-        @licstart  The following is the entire license notice for the 
-        JavaScript code in this page.
+		<script>
+		/*    
+		@licstart  The following is the entire license notice for the 
+		JavaScript code in this page.
 
-        Copyright (C) 2017  Aaron Thomas
+		Copyright (C) 2017  Aaron Thomas
 
-        The JavaScript code in this page is free software: you can
-        redistribute it and/or modify it under the terms of the GNU
-        General Public License (GNU GPL) as published by the Free Software
-        Foundation, either version 3 of the License, or (at your option)
-        any later version.  The code is distributed WITHOUT ANY WARRANTY;
-        without even the implied warranty of MERCHANTABILITY or FITNESS
-        FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+		The JavaScript code in this page is free software: you can
+		redistribute it and/or modify it under the terms of the GNU
+		General Public License (GNU GPL) as published by the Free Software
+		Foundation, either version 3 of the License, or (at your option)
+		any later version.  The code is distributed WITHOUT ANY WARRANTY;
+		without even the implied warranty of MERCHANTABILITY or FITNESS
+		FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
 
-        As additional permission under GNU GPL version 3 section 7, you
-        may distribute non-source (e.g., minimized or compacted) forms of
-        that code without the copy of the GNU GPL normally required by
-        section 4, provided you include this license notice and a URL
-        through which recipients can access the Corresponding Source.   
+		As additional permission under GNU GPL version 3 section 7, you
+		may distribute non-source (e.g., minimized or compacted) forms of
+		that code without the copy of the GNU GPL normally required by
+		section 4, provided you include this license notice and a URL
+		through which recipients can access the Corresponding Source.   
 
 
-        @licend  The above is the entire license notice
-        for the JavaScript code in this page.
-        */
+		@licend  The above is the entire license notice
+		for the JavaScript code in this page.
+		*/
 
-        function post(path, params) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", path, true);
-            xhr.setRequestHeader("Content-Type", "application/JSON; charset=UTF-8");
-            xhr.send(params);
-        }
+		function post(path, params) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", path, true);
+			xhr.setRequestHeader("Content-Type", "application/JSON; charset=UTF-8");
+			xhr.send(params);
+		}
 
-        function submit(){ //@todo(aaron): do forms the right way in flask
-            var url = document.getElementById("url").value;
-            var location_description = document.getElementById("location_description").value;
-            var secret = document.getElementById("secret").value;
-            var data = {location_description: location_description,
-                        url: url,
-                        secret: secret
-            };
-            post('/handle_form', data)
-        }
+		function submit(){ //@todo(aaron): do forms the right way in flask
+			var url = document.getElementById("url").value;
+			var location_description = document.getElementById("location_description").value;
+			var secret = document.getElementById("secret").value;
+			var data = {location_description: location_description,
+						url: url,
+						secret: secret
+			};
+			post('/handle_form', data)
+		}
 </script>
 	</head>
 	<body>
@@ -69,24 +69,24 @@
 		<div class="default_paragraph_class">
 			This is an independently operated server running RedirectLogQ. If you are seeing this then the operator of the server has not changed the entry form page. For more information about RedirectLogQ you can view it on GitHub. Check it out at <a href="https://www.GitHub.com/Metruption/RedirectLogQ">https://www.GitHub.com/Metruption/RedirectLogQ</a>
 		</div>
-        <div class="default_paragraph_class" id="form">
-            <div id = "url_input">
-                URL:<br>
-                <input type="text" id="url" value="">
-                <br>
-            </div>
-            <div id = "location_description_input">
-                Location Description:<br>
-                <input type="text" id="location_description" value="">
-                <br>
-            </div>
-            <div id = "secret_input" hidden = "{{secret_hidden}}">
-                Secret:<br>
-                <input type="text" id="secret" value="">
-                <br>
-            </div>
-            <br>
-            <input type="submit" value="Submit" onclick="submit()">
-        </div>
+		<div class="default_paragraph_class" id="form">
+			<div id = "url_input">
+				URL:<br>
+				<input type="text" id="url" value="">
+				<br>
+			</div>
+			<div id = "location_description_input">
+				Location Description:<br>
+				<input type="text" id="location_description" value="">
+				<br>
+			</div>
+			<div id = "secret_input" hidden = "{{secret_hidden}}">
+				Secret:<br>
+				<input type="text" id="secret" value="">
+				<br>
+			</div>
+			<br>
+			<input type="submit" value="Submit" onclick="submit()">
+		</div>
 	</body>
 </html>
