@@ -59,8 +59,8 @@ def handle_tokens():
         returns Success if the url is valid after a flier is added to the database
         returns Failure if something is awry (either user input or the db poops its pants)
     '''
-    url = request.form('url')
-    location_description = request.form('location_description')
+    url = request.form['url']
+    location_description = request.form['location_description']
 
     token = token_handler.generate_token(url)
 
