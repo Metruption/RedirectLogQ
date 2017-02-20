@@ -47,7 +47,7 @@ def display_form():
     '''
     @todo(aaron): decide if it's worth your time making a comment for this
     '''
-    secret_hidden = mysecreret == None
+    secret_hidden = mysecret == None
     return render_template('form.html', secret_hidden=secret_hidden)
 
 
@@ -67,6 +67,9 @@ def handle_form():
     secret = request.form['secret']
 
     token = token_handler.generate_token(url)
+    if mysecret != None and secret != mysecret:
+        return "Failure"
+
 
     if token == None:
         print("An error has occured. The url {} is not valid.".format(url))
