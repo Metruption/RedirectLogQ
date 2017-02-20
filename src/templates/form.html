@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<!--
+    RedirectLogQ: A simple URL redirection backend that logs the time of each redirection.
+    Copyright (C) 2017  Aaron Thomas
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+	<head>
+		<title>RedirectLogQ</title>
+        <script>
+        function submit(){ //@todo(aaron): do forms the right way in flask
+            var username = document.getElementById("url").value;
+            var password = document.getElementById("nickname").value;
+            var newloc = "".concat("/form/url=\"", url, "\"+nickname=\"", nickname,"\"");
+            window.location = newloc
+        }
+</script>
+	</head>
+	<body>
+		<div class="default_header_class">Default RedirectLogQ Entry Form</div>
+		<div class="default_paragraph_class">
+			This is an independently operated server running RedirectLogQ. If you are seeing this then the operator of the server has not changed the entry form page. For more information about RedirectLogQ you can view it on GitHub. Check it out at <a href="https://www.GitHub.com/Metruption/RedirectLogQ">https://www.GitHub.com/Metruption/RedirectLogQ</a>
+		</div>
+        <div class="default_paragraph_class" id="result">
+        {{result}}
+        </div>
+        <div class="default_paragraph_class" id="form">
+            URL:<br>
+            <input type="text" id="url" value="">
+            <br>
+            Nickname:<br>
+            <input type="text" id="nickname" value="">
+            <br><br>
+            <input type="submit" value="Submit" onclick="submit()">
+        </div>
+	</body>
+</html>

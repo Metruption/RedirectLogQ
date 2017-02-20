@@ -17,6 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 from flask import Flask, render_template
+import tokenmanager
 
 app = Flask(__name__)
 
@@ -25,7 +26,7 @@ app = Flask(__name__)
 def index():
 	return render_template('index.html')
 
-@app.route('/redirect.php?token=<token>') #i could have chosen any name as long as it contained <token>
+@app.route('/redirect/<token>') #i could have chosen any name as long as it contained <token>
 def redirect(token):
 	'''
 	Redirects the user
@@ -36,6 +37,33 @@ def redirect(token):
 		4) write code so that the databse has logs of all the stuff
 		5) you win!
 	'''
-	return render_template('redirect.html',url=token)
+	return render_template('redirect.html', url=token)
+
+@app.route('/form')
+def display_empty_form():
+    '''
+    @todo(aaron): decide if it's worth your time making a comment for this
+    '''
+    return render_template('form.html', result="") #@todo(aaron): make the form, also dont push until this is documented
+
+@app.route('/form/url="<url>"+nickname="<nickname>"')
+def display_completed_form(url, nickname):
+    '''
+    @todo(aaron): document this
+    '''
+    token = tokenmanager.generate_token(url)
+    if token == "None":
+        message = "An error has occured. The url {} is not valid.".format(url)
+
+    else:
+        try:
+            #@todo(sean): make a db entry
+            message = "Successfully created a redirect to {} with the nickname {}. Your token is {}".format(url,nickname,token)
+        except:
+            message = "An error has occured. It will probably occur again if you try doing that again, so please do not."
+        finally:
+            pass #@todo(someone): decide if we need any code here and if to keep it if there is no code
+
+    return render_template('form.html', result=message)
 
 app.run()
