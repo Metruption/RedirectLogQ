@@ -11,12 +11,16 @@ I needed a way to redirect URLs and log them. Instead of searching the internet 
 
 * **Python3**: https://www.python.org/
 
-* **Flask**: http://flask.pocoo.org/
+* **MongoDB**: https://www.mongodb.com/
 
-* **PyMongo**: https://api.mongodb.com/python/current/
+* ###The following Python Modules
 
-* **pybase62**: https://github.com/suminb/base62
+..* **Flask**: http://flask.pocoo.org/
 
-* **Requests**: http://docs.python-requests.org/en/master/
+..* **PyMongo**: https://api.mongodb.com/python/current/
+
+..* **pybase62**: https://github.com/suminb/base62
+
+..* **Requests**: http://docs.python-requests.org/en/master/
 
 To resolve the dependencies you can ```$ pip install -r requirements.txt```
