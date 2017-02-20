@@ -17,4 +17,6 @@ I needed a way to redirect URLs and log them. Instead of searching the internet 
 
 * **pybase62**: https://github.com/suminb/base62
 
-To resolve the dependencies you can ```$ pip install -r requirements.txt``` This 
+* **Requests**: http://docs.python-requests.org/en/master/
+
+To resolve the dependencies you can ```$ pip install -r requirements.txt```
