@@ -41,11 +41,11 @@ def index():
 
 
 @app.route('/form')
-def display_empty_form():
+def display_form():
     '''
     @todo(aaron): decide if it's worth your time making a comment for this
     '''
-    return render_template('form.html', result="") #@todo(aaron): make the form, also dont push until this is documented
+    return render_template('form.html') #@todo(aaron): make the form, also dont push until this is documented
 
 
 @app.route('/handle_tokens')
