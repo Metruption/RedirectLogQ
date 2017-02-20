@@ -89,6 +89,7 @@ def redirect_():
     token = request.args.get('token')
 
     redirect_url = token_handler.resolve_token(token)
+
     if redirect_url == None:
         pass #@todo(someone) make it do an error, return 500
 

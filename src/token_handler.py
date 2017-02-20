@@ -29,7 +29,7 @@ def generate_token(url):
 
 	return token
 
-def resolve_token(token):
+def resolve_token(flier_coll, token):
 	'''
 	@params:
 		token is a string hopefully containing a valid token
@@ -41,4 +41,4 @@ def resolve_token(token):
 		returns the URL associated with the token if the precondtions are met
 		otherwise returns None
 	'''
-	pass #@todo(aaron) code this
+	return flier_coll.find_one({"token": token})
