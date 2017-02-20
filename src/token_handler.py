@@ -19,7 +19,8 @@ def generate_token(url):
 		returns a tokenized URL if the preconditons are met
 		otherwise returns None
 	'''
-	r = requests.get(url)
+	headers = {'user-agent': 'RedirectLogQ'}
+	r = requests.get(url, headers=headers)
 	if r.status_code != 200:
 		return None
 
