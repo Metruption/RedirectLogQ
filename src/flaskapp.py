@@ -51,23 +51,28 @@ def display_form():
 @app.route('/handle_tokens', methods=['POST'])
 def handle_tokens():
     '''
-    @todo(aaron): document this
+    @preconditions:
+        the post has the arguments 'url' and 'location_description'
+            url is a valid url
+            location_description is a string and should be meaningful to a human reader
+    @postconditions:
+        returns Success if the url is valid after a flier is added to the database
+        returns Failure if something is awry (either user input or the db poops its pants)
     '''
     url = request.form('url')
     location_description = request.form('location_description')
 
     token = token_handler.generate_token(url)
 
-    flier = {
-        "real_url": url,
-        "token": token,
-        "location_description": location_description
-    }
-
     if token == None:
         print("An error has occured. The url {} is not valid.".format(url))
         return "Failure"
     else:
+        flier = {
+            "real_url": url,
+            "token": token,
+            "location_description": location_description
+        }   
         try:
             db.flier_coll.insert_one(flier)
             return "Success"
