@@ -41,4 +41,6 @@ def resolve_token(flier_coll, token):
 		returns the URL associated with the token if the precondtions are met
 		otherwise returns None
 	'''
-	return flier_coll.find_one({"token": token})
+	dict_ = flier_coll.find_one({"token": token})
+	url = dict_['url']
+	return url
