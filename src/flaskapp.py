@@ -48,13 +48,13 @@ def display_form():
     return render_template('form.html') #@todo(aaron): make the form, also dont push until this is documented
 
 
-@app.route('/handle_tokens')
-def handle_tokens(url, location_description):
+@app.route('/handle_tokens', methods=['POST'])
+def handle_tokens():
     '''
     @todo(aaron): document this
     '''
-    url = request.args.post('url')
-    location_description = request.args.post('location_description')
+    url = request.form('url')
+    location_description = request.form('location_description')
 
     token = token_handler.generate_token(url)
 
