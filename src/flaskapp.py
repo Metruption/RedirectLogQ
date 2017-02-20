@@ -20,7 +20,7 @@
 from datetime import datetime, timezone
 import uuid
 
-from flask import Flask, make_response, render_template, request
+from flask import Flask, make_response, render_template, redirect, request
 from pymongo import MongoClient
 
 import token_handler
@@ -89,22 +89,30 @@ def redirect_():
     '''
     Redirects the user
     '''
-    redirect_url = token_handler.resolve_token(flier_coll, token)
+    token = request.args.get('token')
+
+    redirect_url = token_handler.resolve_token(token)
+
     if redirect_url == None:
         pass #@todo(someone) make it do an error, return 500
 
-    
-    token = request.args.get('token')
     now = str(datetime.now(timezone.utc))
 
-    redirect_obj = flask.redirect(redirect_url, code=303)
+    redirect_obj = redirect(redirect_url, code=303)
     response = make_response(redirect_obj)
 
-    if 'RedirectLogQ_cookie' in request.cookies:
+    has_cookie = False
+    try:
+        if 'RedirectLogQ_cookie' in request.cookies:
+            has_cookie = True
+            cookie_value = request.cookies['RedirectLogQ_cookie']
+        else:
+            cookie_value = uuid.uuid4().hex
+            response.set_cookie('RedirectLogQ_cookie', value=cookie_value)
+    except KeyError:
         cookie_value = uuid.uuid4().hex
         response.set_cookie('RedirectLogQ_cookie', value=cookie_value)
-    else:
-        cookie_value = request.cookies['RedirectLogQ_cookie']
+
     hit = {
         "time": now,
         "token": token,
