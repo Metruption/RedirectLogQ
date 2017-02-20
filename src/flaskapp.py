@@ -51,8 +51,8 @@ def display_form():
     return render_template('form.html', secret_hidden=secret_hidden)
 
 
-@app.route('/handle_tokens', methods=['POST'])
-def handle_tokens():
+@app.route('/handle_form', methods=['POST'])
+def handle_form():
     '''
     @preconditions:
         the post has the arguments 'url' and 'location_description'
@@ -64,6 +64,7 @@ def handle_tokens():
     '''
     url = request.form['url']
     location_description = request.form['location_description']
+    secret = request.form['secret']
 
     token = token_handler.generate_token(url)
 
@@ -91,7 +92,7 @@ def redirect_():
     '''
     token = request.args.get('token')
 
-    redirect_url = token_handler.resolve_token(token)
+    redirect_url = token_handler.resolve_token(flier_coll, token)
 
     if redirect_url == None:
         pass #@todo(someone) make it do an error, return 500
