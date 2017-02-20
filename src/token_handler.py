@@ -1,7 +1,6 @@
 '''
 This file contains functions that deal with the tokens of URLs.
 '''
-from pymongo import MongoClient
 import base62
 import requests
 import uuid
