@@ -52,7 +52,7 @@ def display_completed_form(url, location_description):
     @todo(aaron): document this
     '''
     token = token_handler.generate_token(url)
-    if token == "None":
+    if token == None:
         message = "An error has occured. The url {} is not valid.".format(url)
 
     else:
