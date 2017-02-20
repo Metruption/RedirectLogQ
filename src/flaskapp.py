@@ -86,7 +86,7 @@ def redirect_():
     '''
     Redirects the user
     '''
-    redirect_url = tokenmanager.resolve_token(token)
+    redirect_url = token_handler.resolve_token(flier_coll, token)
     if redirect_url == None:
         pass #@todo(someone) make it do an error, return 500
 
