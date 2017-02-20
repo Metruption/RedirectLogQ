@@ -31,13 +31,14 @@ app = Flask(__name__)
 client = MongoClient()  # Connect to mongodb
 db = client.RedirectLogQ_db  # Establish a database
 hit_coll = db.hit_coll  # Establish a collection for hits
-redirect_coll = db.redirect_coll  # Establish a collection for redirects 
-locations_coll = db.locations_coll # Establish a collection for physical locations
+flier_coll = db.flier_coll  # Establish a collection for fliers 
+
 
 @app.route('/')
 @app.route('/index')
 def index():
 	return render_template('index.html')
+
 
 @app.route('/form')
 def display_empty_form():
@@ -46,25 +47,33 @@ def display_empty_form():
     '''
     return render_template('form.html', result="") #@todo(aaron): make the form, also dont push until this is documented
 
-@app.route('/form/url="<url>"+location_description="<location_description>"')
-def display_completed_form(url, location_description):
+
+@app.route('/handle_tokens')
+def handle_tokens(url, location_description):
     '''
     @todo(aaron): document this
     '''
-    token = token_handler.generate_token(url)
-    if token == None:
-        message = "An error has occured. The url {} is not valid.".format(url)
+    url = request.args.post('url')
+    location_description = request.args.post('location_description')
 
+    token = token_handler.generate_token(url)
+
+    flier = {
+        "real_url": url,
+        "token": token,
+        "location_description": location_description
+    }
+
+    if token == None:
+        print("An error has occured. The url {} is not valid.".format(url))
+        return "Failure"
     else:
         try:
-            #@todo(sean): make a db entry
-            message = "Successfully created a redirect to {} with the location description {}. Your token is {}".format(url, location_description, token)
-        except:
-            message = "An error has occured. It will probably occur again if you try doing that again, so please do not."
-        finally:
-            pass #@todo(someone): decide if we need any code here and if to keep it if there is no code
-
-    return render_template('form.html', result=message)
+            db.flier_coll.insert_one(flier)
+            return "Success"
+        except Exception as e:
+            print(e)
+            return "Failure"
 
 
 @app.route('/redirect', methods=['GET'])  # I could have chosen any name as long as it contained <token>
@@ -72,32 +81,28 @@ def redirect_():
     '''
     Redirects the user
     '''
-
-    #@todo(sean): add control flow so we don't make new cookies if they already have one
-
-    token_data = tokenmanager.resolve_token(token)
-
     redirect_url = tokenmanager.resolve_token(token)
     if redirect_url == None:
         pass #@todo(someone) make it do an error, return 500
 
-    newcookie = uuid.uuid4().hex
+    
     token = request.args.get('token')
     now = str(datetime.now(timezone.utc))
 
     redirect_obj = flask.redirect(redirect_url, code=303)
     response = make_response(redirect_obj)
-    response.set_cookie('RedirectLogQ_cookie', value=cookie_value)
+
+    if 'RedirectLogQ_cookie' in request.cookies:
+        cookie_value = uuid.uuid4().hex
+        response.set_cookie('RedirectLogQ_cookie', value=cookie_value)
+    else:
+        cookie_value = request.cookies['RedirectLogQ_cookie']
     hit = {
         "time": now,
         "token": token,
-        "cookie": newcookie
+        "cookie": cookie_value
     }
     result = db.hit_coll.insert_one(hit)
-    print(locationID, token)
     return response
-
-    # return render_template('redirect.html',url=token)
-
 
 app.run()
