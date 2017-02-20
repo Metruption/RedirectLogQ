@@ -16,28 +16,28 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
-from flask import Flask, render_template
-import tokenmanager
+
+from datetime import datetime, timezone
+import uuid
+
+from flask import Flask, make_response, render_template, request
+from pymongo import MongoClient
+
+import token_handler
+
 
 app = Flask(__name__)
+
+client = MongoClient()  # Connect to mongodb
+db = client.RedirectLogQ_db  # Establish a database
+hit_coll = db.hit_coll  # Establish a collection for hits
+redirect_coll = db.redirect_coll  # Establish a collection for redirects 
+locations_coll = db.locations_coll # Establish a collection for physical locations
 
 @app.route('/')
 @app.route('/index')
 def index():
 	return render_template('index.html')
-
-@app.route('/redirect/<token>') #i could have chosen any name as long as it contained <token>
-def redirect(token):
-	'''
-	Redirects the user
-	@todo(aaron):
-		1) learn how to have a database
-		2) learn how to generate lots of different URLs
-		3) make sure the database is setup right
-		4) write code so that the databse has logs of all the stuff
-		5) you win!
-	'''
-	return render_template('redirect.html', url=token)
 
 @app.route('/form')
 def display_empty_form():
@@ -46,24 +46,58 @@ def display_empty_form():
     '''
     return render_template('form.html', result="") #@todo(aaron): make the form, also dont push until this is documented
 
-@app.route('/form/url="<url>"+nickname="<nickname>"')
-def display_completed_form(url, nickname):
+@app.route('/form/url="<url>"+location_description="<location_description>"')
+def display_completed_form(url, location_description):
     '''
     @todo(aaron): document this
     '''
-    token = tokenmanager.generate_token(url)
+    token = token_handler.generate_token(url)
     if token == "None":
         message = "An error has occured. The url {} is not valid.".format(url)
 
     else:
         try:
             #@todo(sean): make a db entry
-            message = "Successfully created a redirect to {} with the nickname {}. Your token is {}".format(url,nickname,token)
+            message = "Successfully created a redirect to {} with the location description {}. Your token is {}".format(url, location_description, token)
         except:
             message = "An error has occured. It will probably occur again if you try doing that again, so please do not."
         finally:
             pass #@todo(someone): decide if we need any code here and if to keep it if there is no code
 
     return render_template('form.html', result=message)
+
+
+@app.route('/redirect', methods=['GET'])  # I could have chosen any name as long as it contained <token>
+def redirect_():
+    '''
+    Redirects the user
+    '''
+
+    #@todo(sean): add control flow so we don't make new cookies if they already have one
+
+    token_data = tokenmanager.resolve_token(token)
+
+    redirect_url = tokenmanager.resolve_token(token)
+    if redirect_url == None:
+        pass #@todo(someone) make it do an error, return 500
+
+    newcookie = uuid.uuid4().hex
+    token = request.args.get('token')
+    now = str(datetime.now(timezone.utc))
+
+    redirect_obj = flask.redirect(redirect_url, code=303)
+    response = make_response(redirect_obj)
+    response.set_cookie('RedirectLogQ_cookie', value=cookie_value)
+    hit = {
+        "time": now,
+        "token": token,
+        "cookie": newcookie
+    }
+    result = db.hit_coll.insert_one(hit)
+    print(locationID, token)
+    return response
+
+    # return render_template('redirect.html',url=token)
+
 
 app.run()
