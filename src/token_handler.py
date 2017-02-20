@@ -23,7 +23,7 @@ def generate_token(url):
 	if r.status_code != 200:
 		return None
 
-	token = uuid.uuid4()
+	token = uuid.uuid4().int
 	token = base62.encode(token)
 
 	return token
