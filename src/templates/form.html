@@ -22,8 +22,8 @@
         <script>
         function submit(){ //@todo(aaron): do forms the right way in flask
             var username = document.getElementById("url").value;
-            var password = document.getElementById("nickname").value;
-            var newloc = "".concat("/form/url=\"", url, "\"+nickname=\"", nickname,"\"");
+            var password = document.getElementById("location_description").value;
+            var newloc = "".concat("/form/url=\"", url, "\"+location_description=\"", location_description,"\"");
             window.location = newloc
         }
 </script>
@@ -40,8 +40,8 @@
             URL:<br>
             <input type="text" id="url" value="">
             <br>
-            Nickname:<br>
-            <input type="text" id="nickname" value="">
+            Location Description:<br>
+            <input type="text" id="location_description" value="">
             <br><br>
             <input type="submit" value="Submit" onclick="submit()">
         </div>
