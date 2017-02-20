@@ -55,10 +55,12 @@
         function submit(){ //@todo(aaron): do forms the right way in flask
             var url = document.getElementById("url").value;
             var location_description = document.getElementById("location_description").value;
+            var secret = document.getElementById("secret").value;
             var data = {location_description: location_description,
-                        url: url
+                        url: url,
+                        secret: secret
             };
-            post('/handle_tokens', data)
+            post('/handle_form', data)
         }
 </script>
 	</head>
@@ -73,14 +75,14 @@
                 <input type="text" id="url" value="">
                 <br>
             </div>
-            <div id = "location_description_input"
+            <div id = "location_description_input">
                 Location Description:<br>
                 <input type="text" id="location_description" value="">
                 <br>
             </div>
             <div id = "secret_input" hidden = "{{secret_hidden}}">
                 Secret:<br>
-                <input type="text" id="url" value="">
+                <input type="text" id="secret" value="">
                 <br>
             </div>
             <br>

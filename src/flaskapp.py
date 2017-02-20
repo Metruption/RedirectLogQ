@@ -47,7 +47,7 @@ def display_form():
     '''
     @todo(aaron): decide if it's worth your time making a comment for this
     '''
-    secret_hidden = mysecreret == None:
+    secret_hidden = mysecreret == None
     return render_template('form.html', secret_hidden=secret_hidden)
 
 
