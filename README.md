@@ -9,6 +9,6 @@ I needed a way to redirect URLs and log them. Instead of searching the internet 
 
 **Dependencies:**
 
-* Python
+* Python3
 
-* Flask
+* flask
