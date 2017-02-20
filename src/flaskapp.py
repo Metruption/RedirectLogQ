@@ -112,10 +112,10 @@ def redirect_():
 			cookie_value = request.cookies['RedirectLogQ_cookie']
 		else:
 			cookie_value = uuid.uuid4().hex
-			response.set_cookie('RedirectLogQ_cookie', value=cookie_value)
+			response.set_cookie('RedirectLogQ_cookie', value=cookie_value, max_age="315360000")
 	except KeyError:
 		cookie_value = uuid.uuid4().hex
-		response.set_cookie('RedirectLogQ_cookie', value=cookie_value)
+		response.set_cookie('RedirectLogQ_cookie', value=cookie_value, max_age="315360000")
 
 	hit = {
 		"time": now,
