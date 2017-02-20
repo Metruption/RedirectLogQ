@@ -20,11 +20,63 @@
 	<head>
 		<title>RedirectLogQ</title>
         <script>
+        /*    
+        @licstart  The following is the entire license notice for the 
+        JavaScript code in this page.
+
+        Copyright (C) 2017  Aaron Thomas
+
+        The JavaScript code in this page is free software: you can
+        redistribute it and/or modify it under the terms of the GNU
+        General Public License (GNU GPL) as published by the Free Software
+        Foundation, either version 3 of the License, or (at your option)
+        any later version.  The code is distributed WITHOUT ANY WARRANTY;
+        without even the implied warranty of MERCHANTABILITY or FITNESS
+        FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+        As additional permission under GNU GPL version 3 section 7, you
+        may distribute non-source (e.g., minimized or compacted) forms of
+        that code without the copy of the GNU GPL normally required by
+        section 4, provided you include this license notice and a URL
+        through which recipients can access the Corresponding Source.   
+
+
+        @licend  The above is the entire license notice
+        for the JavaScript code in this page.
+        */
+        //https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
+        function post(path, params, method) {
+
+            method = method || "post"; // Set method to post by default if not specified.
+
+            // The rest of this code assumes you are not using a library.
+            // It can be made less wordy if you use one.
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                 }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
         function submit(){ //@todo(aaron): do forms the right way in flask
-            var username = document.getElementById("url").value;
-            var password = document.getElementById("location_description").value;
-            var newloc = "".concat("/form/url=\"", url, "\"+location_description=\"", location_description,"\"");
-            window.location = newloc
+            var url = document.getElementById("url").value;
+            var location_description = document.getElementById("location_description").value;
+            var data = {location_description: location_description,
+                        url: url
+            };
+            post('/handle_tokens', data)
         }
 </script>
 	</head>
@@ -33,9 +85,6 @@
 		<div class="default_paragraph_class">
 			This is an independently operated server running RedirectLogQ. If you are seeing this then the operator of the server has not changed the entry form page. For more information about RedirectLogQ you can view it on GitHub. Check it out at <a href="https://www.GitHub.com/Metruption/RedirectLogQ">https://www.GitHub.com/Metruption/RedirectLogQ</a>
 		</div>
-        <div class="default_paragraph_class" id="result">
-        {{result}}
-        </div>
         <div class="default_paragraph_class" id="form">
             URL:<br>
             <input type="text" id="url" value="">

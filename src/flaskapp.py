@@ -40,11 +40,11 @@ def index():
 	return render_template('index.html')
 
 @app.route('/form')
-def display_empty_form():
+def display_form():
     '''
     @todo(aaron): decide if it's worth your time making a comment for this
     '''
-    return render_template('form.html', result="") #@todo(aaron): make the form, also dont push until this is documented
+    return render_template('form.html') #@todo(aaron): make the form, also dont push until this is documented
 
 @app.route('/form/url="<url>"+location_description="<location_description>"')
 def display_completed_form(url, location_description):
